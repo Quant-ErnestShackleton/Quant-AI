@@ -6,7 +6,7 @@ from sklearn.metrics import accuracy_score
 def train_model():
 
     #CSV 파일 불러오기
-    df = pd.read_csv("./src/dutch_pay_grouped_data_corrected.csv")
+    df = pd.read_csv("../data/dutch_pay_grouped_data_corrected.csv")
 
     X = df.drop('label', axis=1)
     y = df['label']
