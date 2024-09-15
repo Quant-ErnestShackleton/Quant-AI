@@ -3,15 +3,15 @@ import numpy as np
 
 # 파라미터 재설정
 total_samples = 1000  # 총 데이터 샘플 수
-dutchpay_ratio = 0.7  # 1/N 더치페이 비율
-max_total_dutchpay = 1000000  # 더치페이 총 금액의 최대값
+dutchpay_ratio = 0.8  # 1/N 더치페이 비율
+max_total_dutchpay = 3000000  # 더치페이 총 금액의 최대값
 min_total_dutchpay = 15000  # 더치페이 총 금액의 최소값
 name_included_ratio = 0.95  # 더치페이에서 이름 포함 비율
 average_time_after_payment = 8 * 60  # 입금까지의 평균 시간
 max_total_error_percentages = 10  # 최대 총 금액 오차 범위
 random_error_percentages = 60  # 참여자 별 최대 오차 범위
 max_participants = 10  # 더치페이에 참여할 최대 인원 수
-all_random_percentages = 70  # 완전 랜덤 오차 비율
+all_random_percentages = 30  # 완전 랜덤 오차 비율
 
 time_beta_data_a = 1 # 더치페이 시간 데이터 베타 분포 a값
 time_beta_data_b = 3 # 더치페이 시간 데이터 베타 분포 b값
