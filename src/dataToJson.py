@@ -17,7 +17,7 @@ def data_to_json(is_dutch):
     if is_dutch :
         output_json_path = "./template/dutch_template_data.json"  # JSON 파일 경로를 지정
     else :
-        output_json_path = "./template/non_dutch_template.data.json"
+        output_json_path = "./template/non_dutch_template_data.json"
     with open(output_json_path, 'w') as json_file:
         json.dump(data, json_file, indent=4)
 
