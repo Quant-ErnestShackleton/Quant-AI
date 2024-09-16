@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+from src.dataToJson import data_to_json
+import matplotlib.pyplot as plt
 
 # 파라미터 재설정
 dutchpay_ratio = 0.8  # 1/N 더치페이 비율
@@ -33,11 +35,30 @@ non_dutch_max_error_percentages = 90 # non-dutch 최대 오차 범위
 
 max_time_after_payment = 10080 # 최대 입금 시간 차이 (분 단위), 7일
 
+# 분포 그래프 이미지 이름
+participant_count_graph_name = 'participant_count'
+time_after_payment_graph_name = 'time_after_payment'
+deposit_amount_graph_name = 'deposit_amount'
+user_dutch_chance_graph_name = 'user_dutch_chance'
+
+
+def createData(dutch_data_counts, non_dutch_data_counts):
+    createDutchData(dutch_data_counts)
+    data_to_json(True)
+
+    createNonDutchData(non_dutch_data_counts)
+    data_to_json(False)
 
 
 def createDutchData(sample_count):
     # 데이터 저장용 리스트
     data = []
+
+    # 그래프 분포 용 데이터
+    participant_counts_graph_data = []
+    time_after_payment_graph_data = []
+    deposit_amount_graph_data = []
+    user_dutch_chance_graph_data = []
 
     # 더치페이 데이터 생성 (label = 1)
     for i in range(sample_count):
@@ -111,12 +132,20 @@ def createDutchData(sample_count):
         # 각 사용자의 데이터 생성
         participant_data = []
         for pk in range(N):
+
+            user_dutch_chance = np.random.beta(user_dutch_chance_a, user_dutch_chance_b)
+            deposit_amount = deposit_amounts[pk]
+            time_after_payment_trans = int(time_after_payment[pk] * max_time_after_payment)
+
+            user_dutch_chance_graph_data.append(user_dutch_chance)
+            deposit_amount_graph_data.append(deposit_amount)
+            time_after_payment_graph_data.append(time_after_payment_trans)
+
             participant_data.append({
-                'user_dutch_chance': np.random.beta(user_dutch_chance_a, user_dutch_chance_b),
-                'deposit_amount': deposit_amounts[pk],
-                'time_after_payment': int(time_after_payment[pk] * max_time_after_payment),
-                'is_name_present': is_name_present[pk],
-                'label': label
+                'user_dutch_chance': user_dutch_chance,
+                'deposit_amount': deposit_amount,
+                'time_after_payment': time_after_payment_trans,
+                'is_name_present': is_name_present[pk]
             })
 
         data.append({
@@ -126,12 +155,17 @@ def createDutchData(sample_count):
             'label': label
         })
 
+        participant_counts_graph_data.append(N)
+
+
     # DataFrame 생성
     df = pd.DataFrame(data)
 
     # 수정된 데이터를 CSV로 저장
     csv_file_path = './data/generated_dutch_pay_data.csv'
     df.to_csv(csv_file_path, index=False)
+
+    save_graph_images(participant_counts_graph_data, time_after_payment_graph_data, deposit_amount_graph_data, user_dutch_chance_graph_data, True)
 
     # 경로 반환
     return csv_file_path
@@ -140,6 +174,12 @@ def createDutchData(sample_count):
 def createNonDutchData(sample_count):
     # 데이터 저장용 리스트
     data = []
+
+    # 그래프 분포 용 데이터
+    participant_counts_graph_data = []
+    time_after_payment_graph_data = []
+    deposit_amount_graph_data = []
+    user_dutch_chance_graph_data = []
 
     for i in range(sample_count):
         # 랜덤한 더치페이 참가 인원 (최대 30명)
@@ -197,12 +237,19 @@ def createNonDutchData(sample_count):
         # 각 사용자의 데이터 생성
         participant_data = []
         for pk in range(N):
+            user_dutch_chance = np.random.beta(user_dutch_chance_a, user_dutch_chance_b)
+            deposit_amount = deposit_amounts[pk]
+            time_after_payment_trans = int(time_after_payment[pk] * max_time_after_payment)
+
+            user_dutch_chance_graph_data.append(user_dutch_chance)
+            deposit_amount_graph_data.append(deposit_amount)
+            time_after_payment_graph_data.append(time_after_payment_trans)
+
             participant_data.append({
-                'user_dutch_chance': np.random.beta(user_dutch_chance_a, user_dutch_chance_b),
-                'deposit_amount': deposit_amounts[pk],
-                'time_after_payment': int(time_after_payment[pk] * max_time_after_payment),
-                'is_name_present': is_name_present[pk],
-                'label': label
+                'user_dutch_chance': user_dutch_chance,
+                'deposit_amount': deposit_amount,
+                'time_after_payment': time_after_payment_trans,
+                'is_name_present': is_name_present[pk]
             })
 
         data.append({
@@ -212,6 +259,8 @@ def createNonDutchData(sample_count):
             'label': label
         })
 
+        participant_counts_graph_data.append(N)
+
     # DataFrame 생성
     df = pd.DataFrame(data)
 
@@ -219,6 +268,36 @@ def createNonDutchData(sample_count):
     csv_file_path = './data/generated_non_dutch_pay_data.csv'
     df.to_csv(csv_file_path, index=False, encoding='utf-8-sig')
 
+    save_graph_images(participant_counts_graph_data, time_after_payment_graph_data, deposit_amount_graph_data, user_dutch_chance_graph_data, False)
+
     # 경로 반환
     return csv_file_path
 
+
+def save_graph_image(data, image_name, title, is_dutch, bins=10000):
+    # 한글 폰트 설정 (Windows의 경우 맑은 고딕 사용)
+    plt.rcParams['font.family'] = 'Malgun Gothic'
+
+    # 그래프 그리기
+    plt.figure(figsize=(8, 10))
+    plt.hist(data, bins=bins, color='green', edgecolor='green')  # 히스토그램 형식으로 데이터 분포 표시
+    plt.title(title)
+    plt.xlabel('Value')
+    plt.ylabel('Frequency')
+
+    if is_dutch:
+        file_path = './template/graph/dutch/' + image_name + '.png'
+    else:
+        file_path = './template/graph/non-dutch/' + image_name + '.png'
+
+    # 그래프 이미지 저장
+    plt.savefig(file_path)  # 원하는 경로로 저장 가능
+    plt.show()
+
+
+def save_graph_images(participant_counts_graph_data, time_after_payment_graph_data, deposit_amount_graph_data, user_dutch_chance_graph_data, is_dutch):
+    # 데이터 분포 그래프 이미지 저장
+    save_graph_image(participant_counts_graph_data, participant_count_graph_name, "더치페이 참여자 수", is_dutch, 30)
+    save_graph_image(time_after_payment_graph_data, time_after_payment_graph_name, "더치페이 후 입금 시간", is_dutch)
+    save_graph_image(deposit_amount_graph_data, deposit_amount_graph_name, "개인 별 더치페이 금액", is_dutch)
+    save_graph_image(user_dutch_chance_graph_data, user_dutch_chance_graph_name, "거래 내역 당 더치페이", is_dutch)
