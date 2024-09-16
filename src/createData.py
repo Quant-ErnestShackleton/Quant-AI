@@ -163,6 +163,7 @@ def createDutchData(sample_count):
 
     # 수정된 데이터를 CSV로 저장
     csv_file_path = './data/generated_dutch_pay_data.csv'
+    print(f"CSV 파일이 ${csv_file_path}에 저장되었습니다.")
     df.to_csv(csv_file_path, index=False)
 
     save_graph_images(participant_counts_graph_data, time_after_payment_graph_data, deposit_amount_graph_data, user_dutch_chance_graph_data, True)
@@ -264,6 +265,7 @@ def createNonDutchData(sample_count):
 
     # 수정된 데이터를 CSV로 저장
     csv_file_path = './data/generated_non_dutch_pay_data.csv'
+    print(f"CSV 파일이 ${csv_file_path}에 저장되었습니다.")
     df.to_csv(csv_file_path, index=False, encoding='utf-8-sig')
 
     save_graph_images(participant_counts_graph_data, time_after_payment_graph_data, deposit_amount_graph_data, user_dutch_chance_graph_data, False)
@@ -272,12 +274,12 @@ def createNonDutchData(sample_count):
     return csv_file_path
 
 
-def save_graph_image(data, image_name, title, is_dutch, bins=10000):
+def save_graph_image(data, image_name, title, is_dutch, bins=316):
     # 한글 폰트 설정 (Windows의 경우 맑은 고딕 사용)
     plt.rcParams['font.family'] = 'Malgun Gothic'
 
     # 그래프 그리기
-    plt.figure(figsize=(8, 10))
+    plt.figure(figsize=(4, 6))
     plt.hist(data, bins=bins, color='green', edgecolor='green')  # 히스토그램 형식으로 데이터 분포 표시
     plt.title(title)
     plt.xlabel('Value')
@@ -295,7 +297,7 @@ def save_graph_image(data, image_name, title, is_dutch, bins=10000):
 
 def save_graph_images(participant_counts_graph_data, time_after_payment_graph_data, deposit_amount_graph_data, user_dutch_chance_graph_data, is_dutch):
     # 데이터 분포 그래프 이미지 저장
-    save_graph_image(participant_counts_graph_data, participant_count_graph_name, "더치페이 참여자 수", is_dutch, 30)
+    save_graph_image(participant_counts_graph_data, participant_count_graph_name, "더치페이 참여자 수", is_dutch, 23)
     save_graph_image(time_after_payment_graph_data, time_after_payment_graph_name, "더치페이 후 입금 시간", is_dutch)
     save_graph_image(deposit_amount_graph_data, deposit_amount_graph_name, "개인 별 더치페이 금액", is_dutch)
     save_graph_image(user_dutch_chance_graph_data, user_dutch_chance_graph_name, "거래 내역 당 더치페이", is_dutch)

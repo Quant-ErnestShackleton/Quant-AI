@@ -4,8 +4,11 @@ import json
 
 def data_to_json(is_dutch):
     # CSV 파일을 불러와서 DataFrame으로 변환
-    file_path = "./data/generated_dutch_pay_data.csv"  # 여기서 your_file_path에 실제 CSV 파일 경로를 넣으세요
-    df = pd.read_csv(file_path)
+    if is_dutch:
+        file_path = "./data/generated_dutch_pay_data.csv"
+    else:
+        file_path = "./data/generated_non_dutch_pay_data.csv"
+    df = pd.read_csv(file_path, nrows=50)
 
     # participants_data 열을 리스트로 변환
     df['participants_data'] = df['participants_data'].apply(ast.literal_eval)
