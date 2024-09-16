@@ -43,9 +43,80 @@
         .participant-section {
             padding: 16px;
         }
+        .image-box {
+          flex: 25%; /* 한 줄에 4개의 이미지 */
+          max-width: 25%;
+          box-sizing: border-box;
+        }
+
+        .image-box img {
+          width: 100%;
+          height: auto;
+        }
+
+        /* 테이블 스타일 */
+        table {
+          width: 90%; /* 테이블 너비를 90%로 조정하여 좌우에 여백 추가 */
+          border-collapse: collapse;
+          margin: 20px auto; /* 테이블 주위에 여백을 추가하고 가운데 정렬 */
+          font-family: Arial, sans-serif;
+        }
+
+        /* 표 제목 스타일 */
+        table th {
+          background-color: #4CAF50;
+          color: white;
+          font-size: 18px;
+          padding: 10px;
+          text-align: center;
+        }
+
+        /* 테이블 셀 스타일 */
+        table td {
+          border: 1px solid #ddd;
+          padding: 10px;
+          text-align: center;
+        }
+
+        /* 이미지 스타일 */
+        table img {
+          width: 100%;
+          height: auto;
+          border-radius: 5px;
+        }
+
+
     </style>
 </head>
 <body>
+
+<table style="width:80%; text-align:center; margin-bottom:30px;">
+  <tr>
+    <th colspan="4">Dutch Pay 데이터</th>
+  </tr>
+  <tr>
+    <td><img src="./graph/dutch/participant_count.png" alt="더치페이 참여자 수" style = "width:100%;"></td>
+    <td><img src="./graph/dutch/deposit_amount.png" alt="개인 별 더치페이 금액" style = "width:100%;"></td>
+  </tr>
+  <tr>
+    <td><img src="./graph/dutch/time_after_payment.png" alt="더치페이 후 입금 시간" style = "width:100%;"></td>
+    <td><img src="./graph/dutch/user_dutch_chance.png" alt="거래 내역 당 더치페이" style = "width:100%;"></td>
+  </tr>
+</table>
+
+<table style="width:80%; text-align:center; margin-bottom:30px;">
+  <tr>
+    <th colspan="4">Non-Dutch Pay 데이터</th>
+  </tr>
+  <tr>
+    <td><img src="./graph/non-dutch/participant_count.png" alt="더치페이 참여자 수" style = "width:100%;"></td>
+    <td><img src="./graph/non-dutch/deposit_amount.png" alt="개인 별 더치페이 금액" style = "width:100%;"></td>
+  </tr>
+  <tr>
+    <td><img src="./graph/non-dutch/time_after_payment.png" alt="더치페이 후 입금 시간" style = "width:100%;"></td>
+    <td><img src="./graph/non-dutch/user_dutch_chance.png" alt="거래 내역 당 더치페이" style = "width:100%;"></td>
+  </tr>
+</table>
 
 <h1>더치페이 목록</h1>
 
