@@ -114,7 +114,7 @@ def createDutchData(sample_count):
             participant_data.append({
                 'user_dutch_chance': np.random.beta(user_dutch_chance_a, user_dutch_chance_b),
                 'deposit_amount': deposit_amounts[pk],
-                'time_after_payment': time_after_payment[pk] * max_time_after_payment,
+                'time_after_payment': int(time_after_payment[pk] * max_time_after_payment),
                 'is_name_present': is_name_present[pk],
                 'label': label
             })
