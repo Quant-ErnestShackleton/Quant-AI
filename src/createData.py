@@ -23,8 +23,8 @@ min_dutchpay_amount = 1500  # 참여자 더치페이 금액의 최소값
 user_dutch_chance_a = 8 # 사용자 더치페이 확률 베타 분포 a
 user_dutch_chance_b = 5 # 사용자 더치페이 확률 베타 분포 b
 
-user_non_dutch_change_a = 2.3 # 사용자 논더치페이 확률 베타 분포 a
-user_non_dutch_change_b = 5 # 사용자 논더치페이 확률 베타 분포 b
+user_non_dutch_chance_a = 2.3 # 사용자 논더치페이 확률 베타 분포 a
+user_non_dutch_chance_b = 5 # 사용자 논더치페이 확률 베타 분포 b
 
 total_dutch_participant_beta_a = 1.2 # 총 더치페이 인원 베타 분포 a
 total_dutch_participant_beta_b = 3 # 총 더치페이 인원 베타 분포 b
@@ -229,17 +229,15 @@ def createNonDutchData(sample_count):
         # 더치페이 이름 포함 여부 (50% 확률로 포함)
         is_name_present = [1 if np.random.rand() < 0.5 else 0 for _ in range(N)]
 
-        # 입금까지의 시간 (베타 분포 적용)
-        time_after_payment = np.random.beta(time_beta_data_a, time_beta_data_b, N)
 
         label = 0
 
         # 각 사용자의 데이터 생성
         participant_data = []
         for pk in range(N):
-            user_dutch_chance = np.random.beta(user_dutch_chance_a, user_dutch_chance_b)
+            user_dutch_chance = np.random.beta(user_non_dutch_chance_a, user_non_dutch_chance_b)
             deposit_amount = deposit_amounts[pk]
-            time_after_payment_trans = int(time_after_payment[pk] * max_time_after_payment)
+            time_after_payment_trans = int(np.random.rand() * max_time_after_payment)
 
             user_dutch_chance_graph_data.append(user_dutch_chance)
             deposit_amount_graph_data.append(deposit_amount)
