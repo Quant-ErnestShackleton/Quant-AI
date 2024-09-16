@@ -122,22 +122,37 @@
 
 <div id="dutchpay-list"></div>
 
+<h1>더치페이 X 목록</h1>
+
+<div id="non-dutchpay-list"></div>
+
 <script>
 
-    const jsonFilePath = './template_data.json';
+    const dutchJsonFilePath = './dutch_template_data.json';
+    const nonDutchJsonFilePath = './non_dutch_template_data.json';
 
     // JSON 데이터를 불러옵니다.
-    fetch(jsonFilePath)
+    fetch(dutchJsonFilePath)
         .then(response => response.json())
         .then(data => {
-            renderData(data);
+            renderData(data, 'dutchpay-list');
         })
         .catch(error => {
             console.error('JSON 데이터를 불러오는 중 오류 발생:', error);
         });
 
-    function renderData(data) {
-        const dutchpayList = document.getElementById('dutchpay-list');
+    // JSON 데이터를 불러옵니다.
+    fetch(nonDutchJsonFilePath)
+        .then(response => response.json())
+        .then(data => {
+            renderData(data, 'non-dutchpay-list');
+        })
+        .catch(error => {
+            console.error('JSON 데이터를 불러오는 중 오류 발생:', error);
+        });
+
+    function renderData(data, elementId) {
+        const dutchpayList = document.getElementById(elementId);
 
         data.forEach((item) => {
             // 더치페이 컨테이너 생성
