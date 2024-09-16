@@ -86,6 +86,42 @@
 * 계좌 내역에서 '이체'로 구분된 경우에는 더치페이일 확률 높게
 
 ---
+## ~~더치페이 총 금액 분포~~
+
+~~최대값 **2,000,000**을 기준(value = 1.0) 으로 작성, 8만원 기준 가장 높은 비율~~
+
+~~a = 1.1, b= 5~~
+
+![image](https://github.com/user-attachments/assets/a2711ae7-4aae-41d0-83c5-afae7d0ccaa0)
+
+
+```python
+import numpy as np  
+import matplotlib.pyplot as plt  
+  
+a, b = 1.1, 5 # a는 커지면서 상승 속도 결정, b는 내려가는 구간 조정  
+beta_data = np.random.beta(a, b, size=1000000)  
+  
+print(beta_data)  
+  
+# Plot the distribution  
+plt.figure(figsize=(10, 8))  
+plt.hist(beta_data, bins=1000, density=True, alpha=0.7, label=f'Beta Distribution a={a}, b={b}')  
+plt.title('Beta Distribution')  
+plt.xlabel('Value')  
+plt.ylabel('Density')  
+plt.legend()  
+plt.show()
+```
+
+09.15 수정 
+
+더치페이 총 금액보다는 참여자 별 더치페이 금액으로, 2~3만원 데이터가 많이 나오도록 설정
+a = 1.2, b = 15
+
+![image](https://github.com/user-attachments/assets/e5e32f64-a55a-42a0-b237-f4b4e0ba234d)
+
+---
 
 ### 더치페이 참여 인원
 
@@ -93,10 +129,16 @@
 
 => 베타 분포로 난수 구현
 
+(09.15 추가)
+
+a =1.2, b = 3으로 설정, 최대 값(value = 1.0)은 30명 기준
+**shift 0.07 추가하기** (최소 2명으로 설정하기 위해)
+
+![image](https://github.com/user-attachments/assets/ad9eae72-5d44-431f-a529-fd36c31bbd5e)
 
 
 
-### 더치페이 시간 별 분류
+### 더치페이 후 입금 시간 별 분류
 
 더치페이 후 짧은 시간 내에 송금이 대부분 (예상)
 -> 3가지 분포 예상 가능
@@ -166,4 +208,22 @@ plt.ylabel('Density')
 plt.legend()
 plt.show()
 ```
+---
+
+# 음성 데이터(Non-dutch) 추가 (09.15)
+
+## Non-dutch 데이터 특징
+
+1. 입금 금액의 변동성이 너무 큰 경우에는 Non-dutch로 구분 
+	* 현재 dutch로 인식되는 데이터에 변동성이 있는 경우 포함(최대 20%) 
+	  
+2. 참여자와의 더치페이 확률(더치페이 횟수 / 총 거래 횟수) 여부
+	*  베타 분포 사용, a = 2.3, b = 5
+		<br>
+		\<non-dutch 에서의 참여자와의 더치페이 확률 분포\> 
+		![image](https://github.com/user-attachments/assets/70d87706-a208-44ab-9662-3a782c2a8be9)
+
+		\<dutch 에서의 참여자와의 더치페이 확률 분포\> 
+		![image](https://github.com/user-attachments/assets/cdae4988-4468-49b9-a318-d272842acde2)
+
 
