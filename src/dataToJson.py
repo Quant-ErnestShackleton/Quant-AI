@@ -2,7 +2,7 @@ import pandas as pd
 import ast
 import json
 
-def data_to_json():
+def data_to_json(is_dutch):
     # CSV 파일을 불러와서 DataFrame으로 변환
     file_path = "./data/generated_dutch_pay_data.csv"  # 여기서 your_file_path에 실제 CSV 파일 경로를 넣으세요
     df = pd.read_csv(file_path)
@@ -14,7 +14,10 @@ def data_to_json():
     data = df.to_dict(orient='records')
 
     # JSON 파일로 저장
-    output_json_path = "./template/template_data.json"  # JSON 파일 경로를 지정
+    if is_dutch :
+        output_json_path = "./template/dutch_template_data.json"  # JSON 파일 경로를 지정
+    else :
+        output_json_path = "./template/non_dutch_template.data.json"
     with open(output_json_path, 'w') as json_file:
         json.dump(data, json_file, indent=4)
 
