@@ -163,7 +163,10 @@ cython_debug/
 
 
 # csv result file
-.csv
+generated_dutch_pay_data.csv
+generated_non_dutch_pay_data.csv
 
 # template json data
 template_data.json
+dutch_template_data.json
+non_dutch_template_data.json
