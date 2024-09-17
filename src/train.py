@@ -43,9 +43,9 @@ def process_and_train_xgboost(
     # 1. CSV 파일 읽어오기
     try:
         dutchpay_df = pd.read_csv(dutchpay_csv_path)
-        print(f"더치페이 CSV 파일 '{dutchpay_csv_path}'을 성공적으로 읽어왔습니다.")
+        print(f"Dutchpay CSV 파일 '{dutchpay_csv_path}'을 성공적으로 읽어왔습니다.")
     except Exception as e:
-        print(f"더치페이 CSV 파일을 읽어오는 데 실패했습니다: {e}")
+        print(f"Dutchpay CSV 파일을 읽어오는 데 실패했습니다: {e}")
         return None
 
     try:
@@ -96,14 +96,16 @@ def process_and_train_xgboost(
         return pd.DataFrame(flattened, columns=columns)
 
     # 4. 평탄화 및 패딩 적용
-    print("더치페이 데이터 평탄화 및 패딩 중...")
+    print("Dutchpay 데이터 평탄화 및 패딩 중...")
     dutchpay_flat = flatten_and_pad(dutchpay_df['participants_data'], max_participants=max_participants)
+    dutchpay_flat['participants_count'] = dutchpay_df['participants_count']
     dutchpay_flat['total_dutchpay_amount'] = dutchpay_df['total_dutchpay_amount']
     dutchpay_flat['label'] = dutchpay_df['label']
-    print(f"더치페이 데이터 평탄화 및 패딩 완료. 데이터 형태: {dutchpay_flat.shape}")
+    print(f"Dutchpay 데이터 평탄화 및 패딩 완료. 데이터 형태: {dutchpay_flat.shape}")
 
     print("Non-Dutchpay 데이터 평탄화 및 패딩 중...")
     non_dutchpay_flat = flatten_and_pad(non_dutchpay_df['participants_data'], max_participants=max_participants)
+    non_dutchpay_flat['participants_count'] = non_dutchpay_df['participants_count']
     non_dutchpay_flat['total_dutchpay_amount'] = non_dutchpay_df['total_dutchpay_amount']
     non_dutchpay_flat['label'] = non_dutchpay_df['label']
     print(f"Non-Dutchpay 데이터 평탄화 및 패딩 완료. 데이터 형태: {non_dutchpay_flat.shape}")
@@ -173,5 +175,9 @@ def process_and_train_xgboost(
     print(f"모델 정확도: {accuracy:.2f}")
     print("분류 보고서:")
     print(report)
+
+    # 모델 저장
+    model.save_model('dutchpay_detection_model.json')
+    print("모델이 dutchpay_detection_model.json에 성공적으로 저장되었습니다.")
 
     return model, X_test, y_test, y_pred, accuracy, report
