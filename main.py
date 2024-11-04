@@ -20,10 +20,10 @@ except Exception as e:
 
 # Pydantic 모델 정의
 class Participant(BaseModel):
-    user_dutch_chance: Optional[float] = 0
-    deposit_amount: Optional[float] = 0
-    time_after_payment: Optional[float] = 0
-    is_name_present: Optional[int] = 0
+    user_dutch_chance: float
+    deposit_amount: float
+    time_after_payment: float
+    is_name_present: int
 
 class InputData(BaseModel):
     total_dutchpay_amount: float
@@ -34,7 +34,7 @@ class PredictionResponse(BaseModel):
     prediction: int
     prediction_proba: float
 
-@app.post("/predict", response_model=PredictionResponse)
+@app.post("/api/dutch/predict", response_model=PredictionResponse)
 def predict(data: InputData):
     if model is None:
         raise HTTPException(status_code=500, detail="모델이 로드되지 않았습니다.")
