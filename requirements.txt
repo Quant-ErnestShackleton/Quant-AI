@@ -1,6 +1,6 @@
 annotated-types==0.7.0
 anyio==4.4.0
-Bottleneck @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_2bxpizxa3c/croot/bottleneck_1707864819812/work
+Bottleneck
 certifi==2023.5.7
 charset-normalizer==3.1.0
 click==8.1.7
@@ -15,32 +15,32 @@ h11==0.14.0
 idna==3.4
 imbalanced-learn==0.12.3
 imblearn==0.0
-joblib @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_8ff7uji0v2/croot/joblib_1718217225309/work
+joblib
 kiwisolver==1.4.7
 matplotlib==3.9.2
 nltk==3.9.1
-numexpr @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_45yefq0kt6/croot/numexpr_1696515289183/work
+numexpr
 numpy==1.26.4
 packaging==24.1
-pandas @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_b53hgou29t/croot/pandas_1718308972393/work/dist/pandas-2.2.2-cp310-cp310-macosx_11_0_arm64.whl#sha256=7e70989ec6c6e08f2fd87d3940d106704e9feb936002297690d7462e35b5da35
+pandas
 pillow==10.4.0
 pydantic==2.9.1
 pydantic_core==2.23.3
 pyparsing==3.1.4
-python-dateutil @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_66ud1l42_h/croot/python-dateutil_1716495741162/work
+python-dateutil
 pytz==2023.3
 regex==2024.7.24
 requests==2.31.0
 scikit-learn==1.5.2
 scipy==1.14.1
-six @ file:///tmp/build/80754af9/six_1644875935023/work
+six
 sniffio==1.3.1
 starlette==0.38.5
-threadpoolctl @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_efa5bvb6vi/croot/threadpoolctl_1719407806403/work
+threadpoolctl
 tqdm==4.66.5
 typing_extensions==4.12.2
 tzdata==2024.1
 urllib3==2.0.2
 uvicorn==0.30.6
-xgboost @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_d9k8pmaj4_/croot/xgboost-split_1724073758172/work/python-package
+xgboost
 zope.interface==6.0
